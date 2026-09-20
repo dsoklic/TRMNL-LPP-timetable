@@ -1,0 +1,38 @@
+<div class="layout layout--left layout--top">
+  <div class="columns" data-overflow="true" data-overflow-max-cols="2">
+    <div class="column">
+      {% for group in data.route_groups %}
+        {% for route in group.routes %}
+          {% if route.timetable.size > 0 %}
+            <div class="item">
+              <div class="meta"></div>
+              <div class="content">
+                <div class="flex gap--xsmall">
+                  <span class="label label--filled">{{ group.route_group_number }}{{ route.route_number_suffix }}</span>
+                  <span class="title title--small" data-clamp="1">{{ route.name }}</span>
+                </div>
+                <span class="description">
+                  {% assign started = false %}
+                  {% assign has_current = route.timetable | where: "is_current", true %}
+                  {% if has_current.size == 0 %}{% assign started = true %}{% endif %}
+                  {% assign first_min = true %}
+                  {% for h in route.timetable %}
+                    {% if h.is_current %}{% assign started = true %}{% endif %}
+                    {% if started %}
+                      {% for m in h.minutes %}{% unless first_min %}, {% endunless %}{% assign first_min = false %}{% if h.hour < 10 %}0{% endif %}{{ h.hour }}:{% if m < 10 %}0{% endif %}{{ m }}{% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                </span>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="title_bar">
+  <img class="image" src="https://trmnl.com/images/plugins/trmnl--render.svg">
+  <span class="title">{{ data.station.name }}</span>
+</div>
