@@ -1,46 +1,13 @@
 <div class="layout layout--left layout--top">
   <div class="columns" data-overflow="true" data-overflow-max-cols="1">
     <div class="column">
-      {% assign current_minute = "now" | date: "%M" | plus: 0 %}
       {% for group in data.route_groups %}
         {% for route in group.routes %}
-          {% if route.timetable.size > 0 %}
-            <div class="item">
-              <div class="meta"></div>
-              <div class="content">
-                <div class="flex gap--xsmall flex--center-y">
-                  <span class="label label--filled">{{ group.route_group_number }}{{ route.route_number_suffix }}</span>
-                  <span class="title title--small lg:title--medium" data-clamp="1">{{ route.name }}</span>
-                </div>
-                <span class="description">
-                  {% assign started = false %}
-                  {% assign has_current = route.timetable | where: "is_current", true %}
-                  {% if has_current.size == 0 %}{% assign started = true %}{% endif %}
-                  {% assign first_min = true %}
-                  {% assign shown = 0 %}
-                  {% for h in route.timetable %}
-                    {% if h.is_current %}{% assign started = true %}{% endif %}
-                    {% if started %}
-                      {% for m in h.minutes %}
-                        {% unless h.is_current and m < current_minute %}
-                          {% unless first_min %}, {% endunless %}{% assign first_min = false %}{% if h.hour < 10 %}0{% endif %}{{ h.hour }}:{% if m < 10 %}0{% endif %}{{ m }}
-                          {% assign shown = shown | plus: 1 %}
-                          {% if shown >= 2 %}{% break %}{% endif %}
-                        {% endunless %}
-                      {% endfor %}
-                    {% endif %}
-                    {% if shown >= 2 %}{% break %}{% endif %}
-                  {% endfor %}
-                </span>
-              </div>
-            </div>
-          {% endif %}
+          {% render "route_item" with group: group, route: route, max_minutes: 2 %}
         {% endfor %}
       {% endfor %}
     </div>
   </div>
 </div>
 
-<div class="title_bar">
-  <span class="title">{{ data.station.name }}</span>
-</div>
+{{ title_bar_markup }}
