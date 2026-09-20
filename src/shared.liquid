@@ -1,1 +1,41 @@
-<!-- hi -->
+{% assign current_minute = "now" | date: "%M" | plus: 0 %}
+
+{% capture title_bar_markup %}
+<div class="title_bar">
+  <span class="title">{{ data.station.name }}</span>
+</div>
+{% endcapture %}
+
+{% template route_item %}
+  {% if route.timetable.size > 0 %}
+    <div class="item">
+      <div class="meta"></div>
+      <div class="content">
+        <div class="flex gap--xsmall flex--center-y">
+          <span class="label label--filled">{{ group.route_group_number }}{{ route.route_number_suffix }}</span>
+          <span class="title title--small lg:title--medium" data-clamp="1">{{ route.name }}</span>
+        </div>
+        <span class="description">
+          {% assign started = false %}
+          {% assign has_current = route.timetable | where: "is_current", true %}
+          {% if has_current.size == 0 %}{% assign started = true %}{% endif %}
+          {% assign first_min = true %}
+          {% assign shown = 0 %}
+          {% for h in route.timetable %}
+            {% if h.is_current %}{% assign started = true %}{% endif %}
+            {% if started %}
+              {% for m in h.minutes %}
+                {% unless h.is_current and m < current_minute %}
+                  {% unless first_min %}, {% endunless %}{% assign first_min = false %}{% if h.hour < 10 %}0{% endif %}{{ h.hour }}:{% if m < 10 %}0{% endif %}{{ m }}
+                  {% assign shown = shown | plus: 1 %}
+                  {% if max_minutes > 0 and shown >= max_minutes %}{% break %}{% endif %}
+                {% endunless %}
+              {% endfor %}
+            {% endif %}
+            {% if max_minutes > 0 and shown >= max_minutes %}{% break %}{% endif %}
+          {% endfor %}
+        </span>
+      </div>
+    </div>
+  {% endif %}
+{% endtemplate %}
