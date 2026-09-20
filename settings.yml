@@ -34,7 +34,7 @@ custom_fields:
 - keyname: station_code
   field_type: string
   name: Station Code
-  description: The LPP station code (e.g. from timetables.lpp.si or the pole sign).
+  description: The LPP station code. Get it <a href="https://www.lpp.si/sites/default/files/lpp_vozniredi/iskalnik/index.php" class="underline">here</a>.
   placeholder: '600011'
 - keyname: bus_lines
   field_type: multi_string
