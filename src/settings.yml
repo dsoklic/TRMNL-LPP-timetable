@@ -55,6 +55,6 @@ custom_fields:
   default: 0
   min: 0
   description: How far into the past to show departures.
-name: LPP Timetable Astra
+name: LPP Ljubljana Timetable
 description: LPP Ljubljana departure timetable
 refresh_interval: 15
