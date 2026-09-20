@@ -31,6 +31,12 @@ oauth_expiry_field_name: ''
 oauth_expiry_strategy: ''
 oauth_fixed_expiry_ms: ''
 custom_fields:
+- keyname: doesnt_matter
+  name: About This Plugin
+  field_type: author_bio
+  description: Displays a station's timetable for LPP buses in Ljubljana, Slovenia.
+  github_url: https://github.com/dsoklic/TRMNL-LPP-timetable
+  category: custom,travel
 - keyname: station_code
   field_type: string
   name: Station Code
