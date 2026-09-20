@@ -9,7 +9,7 @@ serverless_language: ''
 polling_url: 'https://data.lpp.si/api/station/timetable?station-code={{ station_code }}{% assign lines = bus_lines | split: "," %}{% for line in lines %}&route-group-number={{ line | strip }}{% endfor %}&next-hours={{ next_hours }}&previous-hours={{ previous_hours }}'
 polling_headers: ''
 polling_body: ''
-id: 482835
+id: 482855
 oauth_enabled: 'false'
 oauth_pkce_enabled: 'no'
 oauth_authorize_url: ''
@@ -45,7 +45,7 @@ custom_fields:
   field_type: number
   name: Next Hours
   optional: true
-  default: 1
+  default: 3
   min: 0
   description: How far into the future to show departures.
 - keyname: previous_hours
@@ -55,6 +55,6 @@ custom_fields:
   default: 0
   min: 0
   description: How far into the past to show departures.
-name: LPP Timetable
+name: LPP Timetable Astra
 description: LPP Ljubljana departure timetable
 refresh_interval: 15
