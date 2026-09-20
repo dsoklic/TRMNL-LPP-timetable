@@ -1,6 +1,7 @@
 <div class="layout layout--left layout--top">
   <div class="columns" data-overflow="true" data-overflow-max-cols="2">
     <div class="column">
+      {% assign current_minute = "now" | date: "%M" | plus: 0 %}
       {% for group in data.route_groups %}
         {% for route in group.routes %}
           {% if route.timetable.size > 0 %}
@@ -19,7 +20,11 @@
                   {% for h in route.timetable %}
                     {% if h.is_current %}{% assign started = true %}{% endif %}
                     {% if started %}
-                      {% for m in h.minutes %}{% unless first_min %}, {% endunless %}{% assign first_min = false %}{% if h.hour < 10 %}0{% endif %}{{ h.hour }}:{% if m < 10 %}0{% endif %}{{ m }}{% endfor %}
+                      {% for m in h.minutes %}
+                        {% unless h.is_current and m < current_minute %}
+                          {% unless first_min %}, {% endunless %}{% assign first_min = false %}{% if h.hour < 10 %}0{% endif %}{{ h.hour }}:{% if m < 10 %}0{% endif %}{{ m }}
+                        {% endunless %}
+                      {% endfor %}
                     {% endif %}
                   {% endfor %}
                 </span>
