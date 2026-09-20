@@ -1,5 +1,5 @@
 <div class="layout layout--left layout--top">
-  <div class="columns" data-overflow="true" data-overflow-max-cols="2">
+  <div class="columns" data-overflow="true" data-overflow-max-cols="2" data-overflow-max-cols-portrait="2">
     <div class="column">
       {% assign current_minute = "now" | date: "%M" | plus: 0 %}
       {% for group in data.route_groups %}
