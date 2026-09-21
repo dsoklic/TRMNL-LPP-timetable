@@ -1,4 +1,4 @@
-{% assign current_minute = "now" | date: "%M" | plus: 0 %}
+{% assign current_minute = "now" | date: "%M" | times: 1 %}
 
 {% capture title_bar_markup %}
 <div class="title_bar">
