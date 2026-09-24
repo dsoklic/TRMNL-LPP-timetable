@@ -6,6 +6,7 @@ static_data: ''
 polling_verb: get
 framework_version: 3.3.2
 serverless_language: ''
+refresh_interval_floor:
 polling_url: 'https://data.lpp.si/api/station/timetable?station-code={{ station_code }}{% assign lines = bus_lines | split: "," %}{% for line in lines %}&route-group-number={{ line | strip }}{% endfor %}&next-hours={{ next_hours }}&previous-hours={{ previous_hours }}'
 polling_headers: ''
 polling_body: ''
